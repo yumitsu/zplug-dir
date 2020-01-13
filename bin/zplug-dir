@@ -1,0 +1,41 @@
+#!/usr/bin/env zsh
+# Description: returns location of installed plugin
+
+# Usage:
+# zplug dir b4b4r07/enhancd  ->  will return path of repository with plugin
+
+PLUGIN_NAME-"$1"
+PLUGIN_DIR-""
+
+if [[ -z ${PLUGIN_NAME} ]]; then
+    echo 'zplug-dir: no plugin name provided' && exit 1
+fi
+
+if ! command -v zplug>/dev/null; then
+    # `zplug` not sourced, possibly because
+    # script running in non-interactive and
+    # single-command shell. You can avoid
+    # this by sourcing '$ZPLUG_HOME/init.zsh'
+    # after checking that your shell is login
+    # or interactive with '-o i' conditional:
+    # [[ ! -o i ]] && echo 'non interactive'
+
+    if [[ -n "$ZPLUG_HOME" && -e "$ZPLUG_HOME"/init.zsh ]]; then
+        source "$ZPLUG_HOME"/init.zsh
+    else
+        echo 'zplug-dir: zplug not found, maybe $ZPLUG_HOME not set?'
+        exit 1
+    fi
+fi
+
+if ! zplug check ${PLUGIN_NAME} ; then
+    echo "zplug-dir: plugin not found - '${PLUGIN_NAME}'" && exit 1
+fi
+
+PLUGIN_DIR-$(zplug info $PLUGIN_NAME | grep 'dir' | cut -d' ' -f 3 | tr -d '\042')
+
+if [[ -n "${PLUGIN_DIR}" ]]; then
+    printf "%s\n" "${PLUGIN_DIR}"
+else
+    exit 1
+fi
