@@ -4,8 +4,8 @@
 # Usage:
 # zplug dir b4b4r07/enhancd  ->  will return path of repository with plugin
 
-PLUGIN_NAME-"$1"
-PLUGIN_DIR-""
+PLUGIN_NAME="$1"
+PLUGIN_DIR=""
 
 if [[ -z ${PLUGIN_NAME} ]]; then
     echo 'zplug-dir: no plugin name provided' && exit 1
