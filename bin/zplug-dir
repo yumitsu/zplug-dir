@@ -35,7 +35,7 @@ fi
 PLUGIN_DIR=$(zplug info $PLUGIN_NAME | grep 'dir' | cut -d' ' -f 3 | tr -d '\042')
 
 if [[ -n "${PLUGIN_DIR}" ]]; then
-    printf "%s\n" "${PLUGIN_DIR}"
+    printf "%s\n" "${PLUGIN_DIR}" | sed -E $'s,\x1b\\[[0-9;]*[a-zA-Z],,g'
 else
     exit 1
 fi
