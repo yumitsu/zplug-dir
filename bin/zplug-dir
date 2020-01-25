@@ -14,19 +14,19 @@ if ! __zplug::core::arguments::none>/dev/null 2>&1; then
     if [[ -n "$ZPLUG_HOME" && -e "$ZPLUG_HOME"/init.zsh ]]; then
         source "$ZPLUG_HOME"/init.zsh
     else
-        echo "zplug-dir: zplug not found, maybe \$ZPLUG_HOME not set?\n" && \
-            exit 1
+        echo "zplug-dir: zplug not found, maybe \$ZPLUG_HOME not set?\n" \
+            && exit 1
     fi
 fi
 
 if [[ -z ${PLUGIN_NAME} ]]; then
-    __zplug::io::print::f "--error" "zplug-dir: no plugin name provided\n" && \
-        exit 1
+    __zplug::io::print::f "--error" "zplug-dir: no plugin name provided\n" \
+        && exit 1
 fi
 
 if ! __zplug::base::base::zpluged "${PLUGIN_NAME}"; then
-    __zplug::io::print::f "--error" \
-        "zplug-dir: plugin not found - '${PLUGIN_NAME}'\n" && exit 1
+    __zplug::io::print::f "--error" "zplug-dir: plugin not found - '${PLUGIN_NAME}'\n" \
+        && exit 1
 else
     PLUGIN_INFO=$(sed -E $'s,\x1b\\[[0-9;]*[a-zA-Z],,g' \
         <(__zplug::core::core::run_interfaces "info" "${PLUGIN_NAME}"))
