@@ -4,6 +4,8 @@
 # Usage:
 # zplug dir b4b4r07/enhancd  ->  will return path of repository with plugin
 
+emulate -L zsh
+
 PLUGIN_NAME="$1"
 PLUGIN_DIR=""
 
@@ -28,7 +30,7 @@ if ! __zplug::base::base::zpluged "${PLUGIN_NAME}"; then
     __zplug::io::print::f "--error" "zplug-dir: plugin not found - '${PLUGIN_NAME}'\n" \
         && exit 1
 else
-    PLUGIN_INFO=$(sed -E $'s,\x1b\\[[0-9;]*[a-zA-Z],,g' \
+    PLUGIN_INFO=$(sed -E "s/[[:cntrl:]]\[[0-9]{1,3}m//g" \
         <(__zplug::core::core::run_interfaces "info" "${PLUGIN_NAME}"))
     PLUGIN_DIR=$(grep -E '^\- dir:' <(echo $PLUGIN_INFO) | cut -d' ' -f 3 | \
         tr -d '\042')
