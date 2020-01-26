@@ -1,10 +1,7 @@
 #!/usr/bin/env zsh
 # Description: returns location of installed plugin
-
 # Usage:
 # zplug dir b4b4r07/enhancd  ->  will return path of repository with plugin
-
-emulate -L zsh
 
 PLUGIN_NAME="$1"
 PLUGIN_DIR=""
